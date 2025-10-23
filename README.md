@@ -1,6 +1,6 @@
-# Bot de Discord
+# Bot de Discord con OpenAI Assistant
 
-Un bot simple de Discord desarrollado en Python que responde a comandos básicos y saluda a los usuarios.
+Este proyecto implementa un bot de Discord que responde preguntas usando el Assistant API de OpenAI. El bot está en `botopenAI.py` y responde a mensajes que comienzan con `$question`.
 
 ## 📋 Características
 
@@ -16,11 +16,17 @@ Un bot simple de Discord desarrollado en Python que responde a comandos básicos
 
 ## 📦 Dependencias
 
-Las dependencias del proyecto están listadas en `requirements.txt`:
+- discord.py
+- openai
+- python-dotenv
 
+Instala todas las dependencias con:
+```bash
+pip install -r requirements.txt
 ```
-discord.py==2.3.2
-python-dotenv==1.0.0
+O manualmente:
+```bash
+pip install discord.py openai python-dotenv
 ```
 
 ## 🚀 Instalación y Configuración
@@ -60,13 +66,39 @@ pip install -r requirements.txt
 touch .env
 ```
 
-2. Agrega tu token de Discord al archivo `.env`:
+2. Agrega tu token de Discord y la API key de OpenAI al archivo `.env`:
 
 ```env
-DISCORD_TOKEN=tu_token_de_discord_aqui
+DISCORD_TOKEN=tu_token_de_discord
+OPENAI_KEY=tu_api_key_de_openai
+ASSISTANT_ID=tu_id_de_assistant
 ```
 
 > ⚠️ **Importante**: Nunca compartas tu token de Discord públicamente. El archivo `.env` está incluido en `.gitignore` para evitar que se suba al repositorio.
+
+## ⚙️ Configuración
+
+### 1. Configura tu bot en Discord
+- Ve a [Discord Developer Portal](https://discord.com/developers/applications)
+- Crea una nueva aplicación y agrega un bot
+- Copia el **token** del bot y agrégalo a tu archivo `.env` como `DISCORD_TOKEN`
+- En la sección **Bot > Privileged Gateway Intents**, activa:
+  - **Message Content Intent** (necesario para leer el contenido de los mensajes)
+  - **Server Members Intent** (opcional, solo si necesitas información de usuarios)
+- Invita el bot a tu servidor con permisos de **Leer mensajes** y **Enviar mensajes**
+
+### 2. Configura tu API Key y Assistant en OpenAI
+- Ve a [OpenAI Platform](https://platform.openai.com/api-keys) y genera una API Key
+- Ve a [OpenAI Assistants](https://platform.openai.com/assistants) y crea un Assistant
+- Copia el **ID del Assistant** y agrégalo a tu archivo `.env` como `ASSISTANT_ID`
+- Agrega la API Key como `OPENAI_KEY` en tu archivo `.env`
+
+### 3. Archivo `.env` ejemplo
+```env
+DISCORD_TOKEN=tu_token_de_discord
+OPENAI_KEY=tu_api_key_de_openai
+ASSISTANT_ID=tu_id_de_assistant
+```
 
 ## 🤖 Obtener Token de Discord
 
@@ -81,14 +113,12 @@ DISCORD_TOKEN=tu_token_de_discord_aqui
 - `Read Message History`
 - `Use Slash Commands` (opcional para futuras funcionalidades)
 
-## ▶️ Ejecutar el Bot
+## 🚀 Ejecución
 
+Activa el entorno virtual y ejecuta el bot:
 ```bash
-# Asegúrate de que el entorno virtual esté activado
 source .venv/bin/activate
-
-# Ejecutar el bot
-python botdiscord.py
+python botopenAI.py
 ```
 
 Si todo está configurado correctamente, verás un mensaje como:
@@ -101,24 +131,25 @@ Bot conectado como NombreDelBot#1234
 | Comando | Descripción | Ejemplo |
 |---------|-------------|---------|
 | `$hola` | El bot saluda mencionando al usuario | Usuario escribe `$hola`, bot responde `Hola @Usuario, gracias por ayudarme a una prueba exitosa de mi bot en Discord!` |
+| `$question` | El bot responde preguntas usando el Assistant API de OpenAI | Usuario escribe `$question ¿Cuál es la capital de Francia?`, bot responde `La capital de Francia es París.` |
 
 ## 📁 Estructura del Proyecto
 
 ```
 bot-discord/
-├── botdiscord.py          # Archivo principal del bot
+├── botopenAI.py           # Archivo principal del bot
 ├── .env                   # Variables de entorno (no versionado)
 ├── .env.example           # Ejemplo de variables de entorno
-├── .gitignore            # Archivos excluidos del control de versiones
+├── .gitignore             # Archivos excluidos del control de versiones
 ├── requirements.txt       # Dependencias del proyecto
-└── README.md             # Este archivo
+└── README.md              # Este archivo
 ```
 
 ## 🔧 Desarrollo
 
 ### Agregar nuevos comandos
 
-Para agregar nuevos comandos, puedes seguir este patrón en `botdiscord.py`:
+Para agregar nuevos comandos, puedes seguir este patrón en `botopenAI.py`:
 
 ```python
 @bot.event
@@ -139,6 +170,19 @@ También puedes usar el sistema de comandos de discord.py:
 @bot.command()
 async def ping(ctx):
     await ctx.send('Pong!')
+```
+
+## 🛡️ Manejo de errores
+
+- Si hay problemas con la API o las variables de entorno, el bot responde con un mensaje de error detallado en Discord.
+- El bot valida que los tokens y el ID del assistant estén presentes en `.env`.
+- Si ocurre un error global, el bot lo envía al primer canal de texto disponible y lo imprime en consola.
+
+## 📚 Ejemplo de `.env`
+```env
+DISCORD_TOKEN=tu_token_de_discord
+OPENAI_KEY=tu_api_key_de_openai
+ASSISTANT_ID=tu_id_de_assistant
 ```
 
 ## 🐛 Solución de Problemas
@@ -168,14 +212,14 @@ pip install discord.py
 
 ```bash
 # Mantener el bot corriendo con nohup
-nohup python botdiscord.py &
+nohup python botopenAI.py &
 ```
 
 ### Opción 2: Heroku
 
 1. Crea un `Procfile`:
 ```
-worker: python botdiscord.py
+worker: python botopenAI.py
 ```
 
 2. Configura las variables de entorno en Heroku
@@ -193,7 +237,7 @@ Puedes crear estos scripts para facilitar el desarrollo:
 ```bash
 #!/bin/bash
 source .venv/bin/activate
-python botdiscord.py
+python botopenAI.py
 ```
 
 ### `setup.sh` (macOS/Linux)
@@ -226,6 +270,12 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 - [Documentación de discord.py](https://discordpy.readthedocs.io/)
 - [Discord Developer Portal](https://discord.com/developers/applications)
 - [Guía de Bots de Discord](https://discordpy.readthedocs.io/en/stable/quickstart.html)
+
+# Evidencia de funcionamiento
+
+A continuación se muestra una evidencia del bot respondiendo en Discord:
+
+![Evidencia del bot funcionando](evidencia.png)
 
 ---
 
