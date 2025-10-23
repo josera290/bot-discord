@@ -1,4 +1,55 @@
-# Bot de Discord con OpenAI Assistant
+# Bot de Discord: Ejemplos Básicos y con OpenAI
+
+Este proyecto incluye dos tipos de bots de Discord:
+
+## 1️⃣ Bot sencillo: `botdiscord.py`
+Un bot básico que responde a comandos simples en Discord.
+
+### Características
+- Responde al comando `$hola` mencionando al usuario.
+- Fácil de extender para otros comandos.
+- No requiere integración con APIs externas.
+
+### Ejemplo de uso
+En Discord, escribe:
+```
+$hola
+```
+El bot responderá:
+```
+Hola @Usuario, gracias por ayudarme a una prueba exitosa de mi bot en Discord!
+```
+
+---
+
+## 2️⃣ Bot con integración OpenAI: `botopenAI.py` y `openai_discord.py`
+Bots que utilizan la OpenAI Assistant API para responder preguntas inteligentes en Discord.
+
+### Características
+- Responde al comando `$question` usando el Assistant API de OpenAI.
+- Permite consultas complejas y respuestas generadas por IA.
+- Manejo avanzado de errores y evidencia visual.
+
+### Ejemplo de uso
+En Discord, escribe:
+```
+$question ¿Cuál es la capital de Francia?
+```
+El bot responderá (usando OpenAI):
+```
+La capital de Francia es París.
+```
+
+---
+
+## Archivos principales
+- `botdiscord.py`: Bot sencillo, solo comandos básicos.
+- `botopenAI.py`: Bot que integra OpenAI Assistant API.
+- `openai_discord.py`: Alternativa de integración con OpenAI Assistant API.
+
+Cada bot tiene su propio ejemplo y configuración. Consulta las secciones siguientes para detalles de instalación, configuración y uso.
+
+# Bot de Discord
 
 Este proyecto implementa un bot de Discord que responde preguntas usando el Assistant API de OpenAI. El bot está en `botopenAI.py` y responde a mensajes que comienzan con `$question`.
 
