@@ -310,11 +310,11 @@ echo "Setup completado. No olvides configurar tu .env file"
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia JoseRa. Ver el archivo `LICENSE` para más detalles.
 
 ## ✨ Autor
 
-- **Tu Nombre** - [Tu GitHub](https://github.com/tu-usuario)
+- **Tu Nombre** - [Tu GitHub](https://github.com/josera290/bot-discord)
 
 ## 🔗 Enlaces Útiles
 
